@@ -21,9 +21,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(('core.urls', 'config'), namespace='core'))
+    path('', include(('core.urls', 'config'), namespace='core')),
+    path('dashboard/lead', include(('lead.urls', 'config'), namespace='lead')),
+    path('dashboard', include(('dashboard.urls', 'config'), namespace='dashboard')),
+    path('users/', include(('userprofile.urls', 'config'), namespace='userprofile'))
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += staticfiles_urlpatterns()
+# if not settings.DEBUG:
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
