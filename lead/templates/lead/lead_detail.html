@@ -25,6 +25,7 @@
     <p class="mb-2">{{ lead.modified_at|date:"M-d-Y H:i" }}</p>
 
     <hr class="my-4">
+    <a href="{% url 'lead:leads_convert' lead.id %}" class="py-2 px-4 text-white bg-blue-500 rounded-xl">Convert to client</a>
     <a href="{% url 'lead:leads_edit' lead.id %}" class="py-2 px-4 text-white bg-teal-500 rounded-xl">Edit</a>
     <a href="{% url 'lead:leads_delete' lead.id %}" class="py-2 px-4 text-white bg-red-500 rounded-xl">Delete</a>
     <hr class="my-4">

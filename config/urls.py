@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('core.urls', 'config'), namespace='core')),
     path('dashboard/lead', include(('lead.urls', 'config'), namespace='lead')),
+    path('dashboard/clients', include(('client.urls', 'config'), namespace='client')),
     path('dashboard', include(('dashboard.urls', 'config'), namespace='dashboard')),
     path('users/', include(('userprofile.urls', 'config'), namespace='userprofile'))
 ]
