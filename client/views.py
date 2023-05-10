@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
+from team.models import Team
 from .forms import AddClientForm
 from .models import Client
 
@@ -29,9 +30,11 @@ def clients_add(request):
         form = AddClientForm(request.POST)
 
         if form.is_valid():
-            lead = form.save(commit=False)
-            lead.created_by = request.user
-            lead.save()
+            team = Team.objects.filter(created_by=request.user)[0]
+            client = form.save(commit=False)
+            client.created_by = request.user
+            client.team = team
+            client.save()
 
             messages.success(request, 'The client was created. ')
 
