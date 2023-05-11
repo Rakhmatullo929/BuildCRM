@@ -3,11 +3,19 @@
 
 {% block content %}
     <div class="py-6 px-6">
-    <h1 class="text-xl">Add Client</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="px-8 py-4 bg-teal-600 text-white rounded-xl">Submit</button>
-        </form>
+        <h1 class="text-xl">Add Client</h1>
+
+        {% if team.plan.max_clients > team.clients.all|length %}
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="px-8 py-4 bg-teal-600 text-white rounded-xl">Submit</button>
+            </form>
+        {% else %}
+            <div class="mt-6 px-6 py-6 bg-red-400 rounded-xl text-white">
+                Your have has reached maximum number of clients. Your owner must upgrade your plan!
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

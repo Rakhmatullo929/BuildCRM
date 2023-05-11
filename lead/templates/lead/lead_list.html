@@ -6,13 +6,13 @@
         <h1 class="mb-4 text-xl">Leads</h1>
         <a href="{% url 'lead:add_lead' %}" class="inline-block py-4 px-6 bg-teal-600 rounded-xl text-white">Add
             Lead</a>
-        {% if leads %}
+        {% if object_list %}
             <div class="mt-6 flex justify-between">
                 <p class="py-4 px-2 bg-gray-200 font-semibold w-full">Name</p>
                 <p class="py-4 px-2 bg-gray-200 font-semibold w-full">Priority</p>
                 <p class="py-4 px-2 bg-gray-200 font-semibold w-full">Status</p>
             </div>
-            {% for lead in leads %}
+            {% for lead in object_list %}
                 <div class="flex justify-between">
                     <p class="px-2 py-2 w-full {% cycle 'bg-gray-100' '' %}">
                         <a href="{% url 'lead:leads_detail' lead.pk %}">

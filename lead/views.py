@@ -1,11 +1,25 @@
+import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.views.generic import ListView
+from django.utils.decorators import method_decorator
 from client.models import Client
 from team.models import Team
 from .forms import AddLeadForm
 from .models import Lead
+
+
+class LeadListView(ListView):
+    model = Lead
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super(LeadListView, self).get_queryset
+        return queryset.filter(created_by=self.request.user, convert_to_client=False)
 
 
 @login_required
@@ -55,6 +69,7 @@ def leads_edit(request, pk):
 
 @login_required
 def add_lead(request):
+    team = Team.objects.filter(created_by=request.user)[0]
     if request.method == "POST":
         form = AddLeadForm(request.POST)
 
@@ -72,7 +87,8 @@ def add_lead(request):
     else:
         form = AddLeadForm()
     return render(request, 'lead/add_lead.html', {
-        'form': form
+        'form': form,
+        'team': team,
     })
 
 
